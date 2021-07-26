@@ -19,6 +19,7 @@ if __name__ == '__main__':
     #                        required=True)
     parser.add_argument('--peak', type=float, help='maximum peak load (Tbps)', required=True)
     parser.add_argument('--pops', type=int, help='number of PoPs', required=True)
+    parser.add_argument('--iterations', type=int, help='number of Monte Carlo iterations', required=True)
 
     args = parser.parse_args()
 
@@ -59,7 +60,7 @@ if __name__ == '__main__':
           f"Number of PoPs: {pops}\n")
 
     # monte carlo
-    iterations = 5
+    iterations = args.iterations
     results = pd.DataFrame(columns=['egress_pop_Gbps', 'numecpop', 'storageec_GB', 'storage1ec_GB', 'replication','chr_ec','util_ec','ingress_pop_Gbps',
                                     'egress_mc_Gbps', 'nummc', 'storagemc_GB', 'chr_mc', 'util_mc',
                                     'valid', 'cost'])
@@ -103,7 +104,7 @@ if __name__ == '__main__':
 
     results.sort_values(by=['valid', 'cost'], ascending=False, inplace=True)
     now = datetime.datetime.now()
-    with open(f"cdn{now}.csv", 'at') as f:
+    with open(f"/da6a/cdn{now}.csv", 'at') as f:
         for line in request.describe(fragmentlen).splitlines():
             f.write(f"# {line}\n")
 
@@ -114,7 +115,7 @@ if __name__ == '__main__':
                 f"#\n")
 
         results.to_csv(f)
-    request.save(f"requests_{now}.png")
+    request.save(f"/data/requests_{now}.png")
     print(results)
 
 
