@@ -104,7 +104,7 @@ if __name__ == '__main__':
 
     results.sort_values(by=['valid', 'cost'], ascending=False, inplace=True)
     now = datetime.datetime.now()
-    with open(f"/da6a/cdn{now}.csv", 'at') as f:
+    with open(f"/data/cdn{now}.csv", 'at') as f:
         for line in request.describe(fragmentlen).splitlines():
             f.write(f"# {line}\n")
 
